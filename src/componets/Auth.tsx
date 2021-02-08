@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Auth.module.css";
+import { updateUserProfile } from "../features/userSlice";
 import { useDispatch } from "react-redux";
 import { auth, provider, storage } from "../firebase";
 import {
@@ -44,16 +45,49 @@ const useStyles = makeStyles(theme => ({
 
 const Auth: React.FC = () => {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState(""); // Auth component内でemailを入力した際のステート
+  const [password, setPassword] = useState(""); // Auth component内でpasswordを入力した際のステート
+  const [username, setUsername] = useState(""); // Auth component内でusernameを入力した際のステート
+  const [avatarImage, setAvatarImage] = useState<File | null>(null); // Auth component内でusernameを入力した際のステート
+  const [isLogin, setIsLogin] = useState(true); // Auth component内でloginしているかどうか識別するステート
 
+  const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files![0]) {
+      setAvatarImage(e.target.files![0]);
+      e.target.value = "";
+    }
+  };
   const signInEmail = async () => {
     await auth.signInWithEmailAndPassword(email, password);
   };
 
   const signUpEmail = async () => {
-    await auth.createUserWithEmailAndPassword(email, password);
+    const authUser = await auth.createUserWithEmailAndPassword(email, password);
+    let url = "";
+    if (avatarImage) {
+      const S =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const N = 16;
+      const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
+        .map(n => S[n % S.length])
+        .join("");
+      const filename = randomChar + "_" + avatarImage.name;
+
+      await storage.ref(`avaters/${filename}`).put(avatarImage);
+      url = await storage.ref("avatars").child(filename).getDownloadURL();
+    }
+
+    await authUser.user?.updateProfile({
+      displayName: username,
+      photoURL: url,
+    });
+    dispatch(
+      updateUserProfile({
+        displayName: username,
+        photoUrl: url,
+      })
+    );
   };
   const signInGoogle = async () => {
     await auth.signInWithPopup(provider).catch(err => console.log(err.message));
@@ -134,7 +168,7 @@ const Auth: React.FC = () => {
                 Forgot password?
               </a>
             </Grid>
-            <Grid item xs>
+            <Grid item>
               <a
                 href="#"
                 className={styles.login_toggleMode}
