@@ -30,7 +30,7 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div>
       {user.uid ? (
         <div className={styles.app}>
           <Feed />
@@ -40,7 +40,7 @@ const App: React.FC = () => {
           <Auth />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
