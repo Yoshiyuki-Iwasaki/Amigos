@@ -15,6 +15,7 @@ import {
   Box,
   Typography,
   Container,
+  IconButton,
 } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import CameraIcon from "@material-ui/icons/Camera";
@@ -66,6 +67,7 @@ const Auth: React.FC = () => {
     const authUser = await auth.createUserWithEmailAndPassword(email, password);
     let url = "";
     if (avatarImage) {
+      // filenameに乱数を咥えるための関数
       const S =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       const N = 16;
@@ -74,7 +76,7 @@ const Auth: React.FC = () => {
         .join("");
       const filename = randomChar + "_" + avatarImage.name;
 
-      await storage.ref(`avaters/${filename}`).put(avatarImage);
+      await storage.ref(`avatars/${filename}`).put(avatarImage);
       url = await storage.ref("avatars").child(filename).getDownloadURL();
     }
 
@@ -103,6 +105,45 @@ const Auth: React.FC = () => {
           {isLogin ? "Login" : "Register"}
         </Typography>
         <form className={classes.form} noValidate>
+          {/* !isLoginがfalseの時 */}
+          {!isLogin && (
+            <>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                value={username}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setUsername(e.target.value);
+                }}
+              />
+              <Box textAlign="center">
+                <IconButton>
+                  <label>
+                    <AccountCircleIcon
+                      fontSize="large"
+                      className={
+                        avatarImage
+                          ? styles.login_addIconLoaded
+                          : styles.login_addIcon
+                      }
+                    />
+                    <input
+                      className={styles.login_hiddenIcon}
+                      type="file"
+                      onChange={onChangeImageHandler}
+                    />
+                  </label>
+                </IconButton>
+              </Box>
+            </>
+          )}
           <TextField
             variant="outlined"
             margin="normal"
@@ -134,6 +175,13 @@ const Auth: React.FC = () => {
             }}
           />
           <Button
+            disabled={
+              isLogin
+                ? // ログインしている時 emailがない時またはpasswordの長さが6文字以下の時
+                  !email || password.length < 6
+                : // ログインしていない時 email,username,avatarImageがない時またはpasswordの長さが6文字以下の時
+                  !username || !email || password.length < 6 || !avatarImage
+            }
             fullWidth
             variant="contained"
             color="primary"
@@ -161,7 +209,6 @@ const Auth: React.FC = () => {
           >
             {isLogin ? "Login" : "Register"}
           </Button>
-
           <Grid container>
             <Grid item xs>
               <a href="#" className={styles.login_reset}>
@@ -180,7 +227,6 @@ const Auth: React.FC = () => {
               </a>
             </Grid>
           </Grid>
-
           <Button
             fullWidth
             variant="contained"
