@@ -24,6 +24,17 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%,-${left}%`,
+  };
+}
+
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -52,6 +63,21 @@ const Auth: React.FC = () => {
   const [username, setUsername] = useState(""); // Auth component内でusernameを入力した際のステート
   const [avatarImage, setAvatarImage] = useState<File | null>(null); // Auth component内でusernameを入力した際のステート
   const [isLogin, setIsLogin] = useState(true); // Auth component内でloginしているかどうか識別するステート
+  const [openModal, setOpenModal] = React.useState(false); // Auth component内でmodalがopenしているかどうか識別するステート
+  const [resetEmail, setResetEmail] = useState(""); // Auth component内でReset PassWordを保持するステート
+
+  const sendResetEmail = async (e: React.MouseEvent<HTMLElement>) => {
+    await auth
+      .sendPasswordResetEmail(resetEmail)
+      .then(() => {
+        setOpenModal(false);
+        setResetEmail("");
+      })
+      .catch(err => {
+        alert(err.message);
+        setResetEmail("");
+      });
+  };
 
   const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files![0]) {
@@ -211,9 +237,14 @@ const Auth: React.FC = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <a href="#" className={styles.login_reset}>
+              <span
+                className={styles.login_reset}
+                onClick={() => {
+                  setOpenModal(true);
+                }}
+              >
                 Forgot password?
-              </a>
+              </span>
             </Grid>
             <Grid item>
               <a
