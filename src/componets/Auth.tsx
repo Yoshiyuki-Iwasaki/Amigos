@@ -11,6 +11,7 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
+  Modal,
   Grid,
   Box,
   Typography,
@@ -52,6 +53,15 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  modal: {
+    online: "none",
+    position: "absolute",
+    width: 400,
+    borderRadius: 10,
+    backgroundColor: "white",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(10),
   },
 }));
 
@@ -263,11 +273,38 @@ const Auth: React.FC = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            startIcon={<CameraIcon />}
             onClick={signInGoogle}
           >
             SignIn with Google
           </Button>
         </form>
+        <Modal
+          open={openModal}
+          onClose={() => {
+            setOpenModal(false);
+          }}
+        >
+          <div style={getModalStyle()} className={classes.modal}>
+            <div className={styles.login_modal}>
+              <TextField
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                type="email"
+                name="email"
+                label="Reset E-mail"
+                value={resetEmail}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setResetEmail(e.target.value);
+                }}
+              />
+              <IconButton onClick={sendResetEmail}>
+                <SendIcon />
+              </IconButton>
+            </div>
+          </div>
+        </Modal>
       </div>
     </Container>
   );
