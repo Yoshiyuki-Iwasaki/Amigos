@@ -8,9 +8,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  Link,
   Modal,
   Grid,
   Box,
@@ -95,6 +92,7 @@ const Auth: React.FC = () => {
       e.target.value = "";
     }
   };
+
   const signInEmail = async () => {
     await auth.signInWithEmailAndPassword(email, password);
   };
@@ -127,9 +125,11 @@ const Auth: React.FC = () => {
       })
     );
   };
+
   const signInGoogle = async () => {
     await auth.signInWithPopup(provider).catch(err => console.log(err.message));
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
