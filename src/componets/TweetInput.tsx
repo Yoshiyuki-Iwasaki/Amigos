@@ -94,7 +94,7 @@ const TweetInput: React.FC = () => {
             <label>
               <AddAPhotoIcon
                 className={
-                  tweetImage ? styles.tweet_addIconLoaded : styles.tweet_addIcon
+                  tweetImage ? styles.tweet_addIcon : styles.tweet_addIconLoaded
                 }
               />
               <input
