@@ -4,7 +4,6 @@
   display: flex;
 }
 .tweet_avatar {
-  cursor: pointer;
   margin-top: 2px;
 }
 .tweet_input {
@@ -38,7 +37,6 @@
   border-radius: 20px !important;
   width: 80px;
   height: 40px !important;
-  margin-left: 80% !important;
 }
 .tweet_sendDisableBtn {
   background-color: gray !important;
@@ -49,6 +47,5 @@
   border-radius: 30px !important;
   width: 80px;
   height: 40px !important;
-  margin-left: 80% !important;
   cursor: none !important;
 }
