@@ -82,39 +82,43 @@ const TweetInput: React.FC = () => {
         </Button>
         <div className={styles.tweet_form}>
           <Avatar className={styles.tweet_avatar} src={user.photoUrl} />
-          <input
-            className={styles.tweet_input}
-            placeholder="What's happen?"
-            type="text"
-            autoFocus
-            value={tweetMsg}
-            onChange={e => {
-              setTweetMsg(e.target.value);
-            }}
-          />
-          <IconButton>
-            <label>
-              <AddAPhotoIcon
-                className={
-                  tweetImage ? styles.tweet_addIcon : styles.tweet_addIconLoaded
-                }
-              />
-              <input
-                className={styles.tweet_hiddenIcon}
-                type="file"
-                onChange={onChangeImageHandler}
-              />
-            </label>
-          </IconButton>
-          <Button
-            //メッセージが空白の時は無効化
-            disabled={!tweetMsg}
-            className={
-              tweetMsg ? styles.tweet_sendBtn : styles.tweet_sendDisableBtn
-            }
-          >
-            Tweet
-          </Button>
+          <div className={styles.tweet_field}>
+            <input
+              className={styles.tweet_input}
+              placeholder="What's happen?"
+              type="text"
+              autoFocus
+              value={tweetMsg}
+              onChange={e => {
+                setTweetMsg(e.target.value);
+              }}
+            />
+            <IconButton>
+              <label>
+                <AddAPhotoIcon
+                  className={
+                    tweetImage
+                      ? styles.tweet_addIcon
+                      : styles.tweet_addIconLoaded
+                  }
+                />
+                <input
+                  className={styles.tweet_hiddenIcon}
+                  type="file"
+                  onChange={onChangeImageHandler}
+                />
+              </label>
+            </IconButton>
+            <Button
+              //メッセージが空白の時は無効化
+              disabled={!tweetMsg}
+              className={
+                tweetMsg ? styles.tweet_sendBtn : styles.tweet_sendDisableBtn
+              }
+            >
+              Tweet
+            </Button>
+          </div>
         </div>
       </form>
     </>

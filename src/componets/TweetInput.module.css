@@ -6,9 +6,15 @@
 .tweet_avatar {
   margin-top: 2px;
 }
+.tweet_field {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 100px);
+}
 .tweet_input {
-  margin-left: 40px;
+  margin-left: 30px;
   width: 90%;
+  height: 150px;
   background-color: #e1e1e1;
   padding: 15px;
   border-radius: 30px;
