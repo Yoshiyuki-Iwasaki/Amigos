@@ -98,7 +98,7 @@ const Post: React.FC<PROPS> = props => {
             </h3>
           </div>
           <div className={styles.post_tweet}>
-            <p>{props.text}</p>
+            <p className={styles.post_tweetText}>{props.text}</p>
           </div>
         </div>
         {/* if you have an image */}
