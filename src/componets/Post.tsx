@@ -101,7 +101,7 @@ const Post: React.FC<PROPS> = props => {
             <p>{props.text}</p>
           </div>
         </div>
-        {/* imageがあれば表示する */}
+        {/* if you have an image */}
         {props.image && (
           <div className={styles.post_tweetImage}>
             <img src={props.image} alt="tweet" />
@@ -113,7 +113,7 @@ const Post: React.FC<PROPS> = props => {
             setopenComments(!openComments);
           }}
         />
-        {/* openCommentsがtrueの時に表示 */}
+        {/* if openComments is true */}
         {openComments && (
           <>
             {comments.map(com => (
