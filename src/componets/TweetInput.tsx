@@ -19,7 +19,11 @@ const TweetInput: React.FC = () => {
     }
   };
 
-  const sendTweet = (e: React.FormEvent<HTMLFormElement>) => {
+  const sendTweet = (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
     if (tweetImage) {
@@ -70,58 +74,55 @@ const TweetInput: React.FC = () => {
   };
 
   return (
-    <>
-      <form onSubmit={sendTweet}>
-        <Button
-          className={styles.tweet_sendBtn}
-          onClick={async () => {
-            await auth.signOut();
-          }}
-        >
-          Logout
-        </Button>
-        <div className={styles.tweet_form}>
-          <Avatar className={styles.tweet_avatar} src={user.photoUrl} />
-          <div className={styles.tweet_field}>
-            <input
-              className={styles.tweet_input}
-              placeholder="What's happen?"
-              type="text"
-              autoFocus
-              value={tweetMsg}
-              onChange={e => {
-                setTweetMsg(e.target.value);
-              }}
-            />
-            <IconButton>
-              <label>
-                <AddAPhotoIcon
-                  className={
-                    tweetImage
-                      ? styles.tweet_addIcon
-                      : styles.tweet_addIconLoaded
-                  }
-                />
-                <input
-                  className={styles.tweet_hiddenIcon}
-                  type="file"
-                  onChange={onChangeImageHandler}
-                />
-              </label>
-            </IconButton>
-            <Button
-              //メッセージが空白の時は無効化
-              disabled={!tweetMsg}
-              className={
-                tweetMsg ? styles.tweet_sendBtn : styles.tweet_sendDisableBtn
-              }
-            >
-              Tweet
-            </Button>
-          </div>
+    <form onSubmit={sendTweet}>
+      <Button
+        className={styles.tweet_sendBtn}
+        onClick={async () => {
+          await auth.signOut();
+        }}
+      >
+        Logout
+      </Button>
+      <div className={styles.tweet_form}>
+        <Avatar className={styles.tweet_avatar} src={user.photoUrl} />
+        <div className={styles.tweet_field}>
+          <input
+            className={styles.tweet_input}
+            placeholder="What's happen?"
+            type="text"
+            autoFocus
+            value={tweetMsg}
+            onChange={e => {
+              setTweetMsg(e.target.value);
+            }}
+          />
+          <IconButton>
+            <label>
+              <AddAPhotoIcon
+                className={
+                  tweetImage ? styles.tweet_addIcon : styles.tweet_addIconLoaded
+                }
+              />
+              <input
+                className={styles.tweet_hiddenIcon}
+                type="file"
+                onChange={onChangeImageHandler}
+              />
+            </label>
+          </IconButton>
+          <Button
+            //メッセージが空白の時は無効化
+            disabled={!tweetMsg}
+            className={
+              tweetMsg ? styles.tweet_sendBtn : styles.tweet_sendDisableBtn
+            }
+            onClick={sendTweet}
+          >
+            Tweet
+          </Button>
         </div>
-      </form>
-    </>
+      </div>
+    </form>
   );
 };
 
