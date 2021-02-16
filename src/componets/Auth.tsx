@@ -229,7 +229,9 @@ const Auth: React.FC = () => {
                     try {
                       await signInEmail();
                     } catch (err) {
-                      alert("error");
+                      alert(
+                        "メールアドレス、またはパスワードに誤りがあります。"
+                      );
                       console.log(err.message);
                     }
                   }
@@ -237,7 +239,7 @@ const Auth: React.FC = () => {
                     try {
                       await signUpEmail();
                     } catch (err) {
-                      alert("error");
+                      alert("ご入力いただいた内容に不備がございます。");
                       console.log(err.message);
                     }
                   }
