@@ -48,7 +48,7 @@ const Post: React.FC<PROPS> = props => {
     },
   ]);
   const [openComments, setopenComments] = useState(false);
-  // const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     // 投稿の内容をFirebaseから取得
@@ -87,18 +87,18 @@ const Post: React.FC<PROPS> = props => {
       <div className={styles.post_avatar}>
         <Avatar
           src={props.avatar}
-          // onClick={() => {
-          //   setModal(!modal);
-          // }}
+          onClick={() => {
+            setModal(!modal);
+          }}
         />
-        {/* {modal && (
+        {modal && (
           <>
             <div className={styles.modal}>
               <Avatar src={props.avatar} />
               <p className={styles.modal_text}>{props.username}</p>
             </div>
           </>
-        )} */}
+        )}
       </div>
       <div className={styles.post_body}>
         <div>
