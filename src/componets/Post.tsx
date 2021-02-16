@@ -93,6 +93,12 @@ const Post: React.FC<PROPS> = props => {
         />
         {modal && (
           <>
+            <span
+              className={styles.overlay}
+              onClick={() => {
+                setModal(!modal);
+              }}
+            ></span>
             <div className={styles.modal}>
               <Avatar src={props.avatar} />
               <p className={styles.modal_text}>{props.username}</p>
