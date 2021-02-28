@@ -75,14 +75,6 @@ const TweetInput: React.FC = () => {
 
   return (
     <form onSubmit={sendTweet}>
-      <Button
-        className={styles.tweet_sendBtn}
-        onClick={async () => {
-          await auth.signOut();
-        }}
-      >
-        Logout
-      </Button>
       <div className={styles.tweet_form}>
         <Avatar className={styles.tweet_avatar} src={user.photoUrl} />
         <div className={styles.tweet_field}>

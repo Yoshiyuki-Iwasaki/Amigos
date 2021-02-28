@@ -5,6 +5,8 @@ import { selectUser, login, logout } from "./features/userSlice";
 import { auth } from "./firebase";
 import Feed from "./componets/Feed";
 import Auth from "./componets/Auth";
+import Footer from "./componets/Footer";
+import Header from "./componets/Header";
 
 const App: React.FC = () => {
   const user = useSelector(selectUser);
@@ -31,6 +33,7 @@ const App: React.FC = () => {
 
   return (
     <div>
+      <Header />
       {user.uid ? (
         <div className={styles.app}>
           <Feed />
@@ -40,6 +43,7 @@ const App: React.FC = () => {
           <Auth />
         </div>
       )}
+      <Footer />
     </div>
   );
 };

@@ -50,6 +50,10 @@ const Post: React.FC<PROPS> = props => {
   const [openComments, setopenComments] = useState(false);
   const [modal, setModal] = useState(false);
 
+  const handleModal = () => {
+    // console.log(this);
+  };
+
   useEffect(() => {
     // 投稿の内容をFirebaseから取得
     const unSub = db
@@ -88,23 +92,9 @@ const Post: React.FC<PROPS> = props => {
         <Avatar
           src={props.avatar}
           onClick={() => {
-            setModal(!modal);
+            console.log("this");
           }}
         />
-        {modal && (
-          <>
-            <span
-              className={styles.overlay}
-              onClick={() => {
-                setModal(!modal);
-              }}
-            ></span>
-            <div className={styles.modal}>
-              <Avatar src={props.avatar} />
-              <p className={styles.modal_text}>{props.username}</p>
-            </div>
-          </>
-        )}
       </div>
       <div className={styles.post_body}>
         <div>
